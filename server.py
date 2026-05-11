@@ -4,8 +4,16 @@ from pydantic import BaseModel
 import numpy as np
 import pandas as pd
 import joblib
+import os
 
 from tensorflow.keras.models import load_model
+
+# =========================
+# DEBUG FILES
+# =========================
+
+print("Current Files:")
+print(os.listdir())
 
 # =========================
 # FASTAPI APP
@@ -17,9 +25,29 @@ app = FastAPI()
 # LOAD MODEL + SCALER
 # =========================
 
-model = load_model("aqi_lstm_model.h5")
+try:
 
-scaler = joblib.load("scaler.pkl")
+    print("Loading model...")
+
+    model = load_model("aqi_lstm_model.h5")
+
+    print("Model loaded successfully")
+
+except Exception as e:
+
+    print("MODEL ERROR:", e)
+
+try:
+
+    print("Loading scaler...")
+
+    scaler = joblib.load("scaler.pkl")
+
+    print("Scaler loaded successfully")
+
+except Exception as e:
+
+    print("SCALER ERROR:", e)
 
 # =========================
 # MEMORY BUFFER
